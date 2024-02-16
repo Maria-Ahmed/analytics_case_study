@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: aggregated_data_analysis
+    description: "Aggregates detailed customer, credit package, and audit request data for comprehensive analysis. Considers adding a supplier dimension for enhanced dashboard visualizations."
+    columns:
+      - name: customer_key
+        description: "A unique key identifying the customer."
+      - name: customer_name
+        description: "Name of the customer."
+      - name: current_status
+        description: "Current status indicating the customer's interaction model (Subscription/Transaction)."
+      - name: previous_status
+        description: "Previous status of the customer for tracking transitions."
+      - name: credit_packages_key
+        description: "A unique key identifying the credit package."
+      - name: fact_key
+        description: "A unique key for the fact table entry."
+      - name: credits_amount
+        description: "Number of credits in the credit package."
+      - name: total_value_eur
+        description: "Total value of the credit package in Euros."
+      - name: price_eur
+        description: "Price of the audit request in Euros."
+      - name: date_key
+        description: "A unique key identifying the date dimension."
+
+      - name: supplier_name
+        description: "Name of the supplier."
+        tests:
+          - not_null
+      - name: supplier_country
+        description: "Suggested: Country of the supplier."
+
+
+      - name: credit_package_utilization
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "expiring_credits >= 0"
+
+      # - name: customer_engagement_evolution
+      #   tests:
+      #     - dbt_macro: test_customer_engagement_evolution
+

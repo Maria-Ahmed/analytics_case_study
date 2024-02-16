@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: processed_raw_data_requests
+    description: "Transforms and cleans raw data requests, including data type conversions and beautification of state descriptions."
+    columns:
+      - name: id_request
+        description: "Unique identifier for each request."
+        tests:
+          - unique
+          - not_null
+      - name: created_date
+        description: "The date when the request was created, converted to DATE type."
+      - name: request_state
+        description: "Current state of the request, with underscores replaced by spaces and init-capped."
+      - name: price_eur
+        description: "Price of the request in Euros, converted to FLOAT type."
+      - name: signed_date
+        description: "The date when the request was signed, converted to DATE type."
+      - name: id_audit
+        description: "Identifier for the related audit."
+      - name: audit_type
+        description: "Type of audit conducted."
+      - name: audit_confirmation_date
+        description: "Date when the audit was confirmed, converted to DATE type."
+      - name: customer_name
+        description: "Name of the customer making the request."
+      - name: id
+        description: "Renamed from id_organization for clarity, serves as a unique identifier."
+      - name: payment_term_days
+        description: "Terms of payment in days."
+      - name: report_published_date
+        description: "Date when the report was published, converted to DATE type."
+      - name: audit_selected_date
+        description: "Date when the audit was selected, converted to DATE type."
+      - name: authorization_requested_date
+        description: "Date when authorization for the request was sought, converted to DATE type."
+      - name: supplier_name
+        description: "Name of the supplier for the audit."
+      - name: supplier_country
+        description: "Country of the supplier."
+      - name: audited_product
+        description: "Product that was audited."
+
+  - name: processed_raw_data_credit_packages
+    description: "Cleans and transforms raw credit package data, including casting dates and numerical values to appropriate formats."
+    columns:
+      - name: id_credit_package
+        description: "Unique identifier for each credit package."
+        tests:
+          - unique
+          - not_null
+      - name: signature_date
+        description: "The date when the credit package agreement was signed, converted to DATE type."
+      - name: start_date
+        description: "Start date of the credit package, converted to DATE type."
+      - name: end_date
+        description: "End date of the credit package, indicating when it expires, converted to DATE type."
+      - name: credits_amount
+        description: "Total number of credits included in the package, converted to INT."
+      - name: total_value_eur
+        description: "Total value of the credit package in Euros, converted to FLOAT."
+      - name: payment_cycle
+        description: "Payment cycle for the credit package (e.g., monthly, quarterly)."
+      - name: id_subscription
+        description: "Identifier for the subscription associated with the credit package."
+      - name: id_organization
+        description: "Identifier for the organization purchasing the credit package."

@@ -1,0 +1,141 @@
+version: 2
+
+models:
+  - name: combined_credit_package_data
+    description: "Combines credit package data with organizational IDs from requests, deduplicates, and assigns a unique key."
+    columns:
+      - name: credit_packages_key
+        description: "A unique surrogate key generated for each credit package."
+        tests:
+          - unique
+          - not_null
+      - name: id_credit_package
+        description: "The original unique identifier for the credit package."
+      - name: id_organization
+        description: "Coalesced organizational ID, prioritizing credit package's ID, falling back to request's ID."
+      - name: start_date
+        description: "Start date of the credit package."
+      - name: end_date
+        description: "Expiration date of the credit package."
+      - name: payment_cycle
+        description: "The payment cycle for the credit package (e.g., monthly, yearly)."
+      - name: signature_date
+        description: "The date the credit package agreement was signed."
+      - name: rn
+        description: "Row number used for deduplication, partitioned by package ID, signature date, and subscription ID."
+        tests:
+          - not_null
+
+  - name: customer_status_transition
+    description: "Identifies customer transitions between transactional and subscription models, implementing SCD Type 3 for handling changes in customer status."
+    columns:
+      - name: customer_key
+        description: "A unique surrogate key generated based on the customer's name."
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: "Name of the customer."
+      - name: id_organization
+        description: "Organizational ID, coalesced from request and credit package data, represents all associated IDs."
+      - name: current_status
+        description: "Indicates the customer's current status based on transaction and subscription records."
+      - name: previous_status
+        description: "Captures the customer's previous status, helpful for tracking status changes over time."
+      - name: id_request
+        description: "Unique identifier for each request."
+      - name: created_date
+        description: "Date when the request or subscription was created."
+      - name: request_state
+        description: "State of the request."
+      - name: signed_date
+        description: "Date when the request was signed."
+      - name: id_audit
+        description: "Audit ID related to the request."
+      - name: audit_type
+        description: "Type of audit conducted."
+      - name: audit_confirmation_date
+        description: "Date when the audit was confirmed."
+      - name: payment_term_days
+        description: "Payment terms in days for the request."
+      - name: report_published_date
+        description: "Date when the audit report was published."
+      - name: audit_selected_date
+        description: "Date when the audit was selected."
+      - name: authorization_requested_date
+        description: "Date when authorization for the audit was requested."
+      - name: supplier_name
+        description: "Name of the supplier involved in the audit."
+      - name: supplier_country
+        description: "Country of the supplier."
+      - name: audited_product
+        description: "Product that was audited."
+      - name: rn
+        description: "Row number for deduplication within partitioned data."
+        tests:
+          - not_null
+
+  - name: dim_date
+    description: "Generates a comprehensive date dimension for use in time-based analyses, covering a wide range from 2019-09-01 to 2050-05-01."
+    columns:
+      - name: id
+        description: "Unique identifier for each date in YYYY-MM-DD format."
+        tests:
+          - unique
+          - not_null
+      - name: full_date
+        description: "The full date."
+      - name: year
+        description: "Calendar year extracted from the date."
+      - name: week
+        description: "Week number extracted from the date."
+      - name: day
+        description: "Day of the month."
+      - name: fiscal_year
+        description: "Fiscal year, currently matching the calendar year."
+      - name: fiscal_qtr
+        description: "Fiscal quarter."
+      - name: month
+        description: "Month number extracted from the date."
+      - name: month_name
+        description: "Full name of the month."
+      - name: week_day
+        description: "Day of the week as a number (0-6, Sunday-Saturday)."
+      - name: day_name
+        description: "Full name of the day."
+      - name: day_is_weekday
+        description: "Boolean flag indicating whether the day is a weekday."
+      - name: loaded_at
+        description: "Timestamp when the record was loaded into the table."
+      - name: date_key
+        description: "A unique surrogate key generated for each date."
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_request_credit_package
+    description: "Integrates request and credit package data, linking customers with their credit packages and requests."
+    columns:
+      - name: fact_key
+        description: "A unique surrogate key generated for each record, combining request ID and creation date."
+        tests:
+          - unique
+          - not_null
+      - name: customer_fk
+        description: "A foreign key surrogate pointing to the customer dimension, generated from customer name."
+      - name: credit_packages_fk
+        description: "A foreign key surrogate pointing to the credit package dimension, generated from the credit package ID."
+      - name: id_organization
+        description: "Coalesced organizational ID from request and credit package data."
+      - name: id_request
+        description: "Unique identifier for the request."
+      - name: id_subscription
+        description: "Identifier for the subscription related to the credit package."
+      - name: id_credit_package
+        description: "Unique identifier for the credit package."
+      - name: credits_amount
+        description: "Amount of credits associated with the credit package."
+      - name: total_value_eur
+        description: "Total value of the credit package in Euros."
+      - name: price_eur
+        description: "Price of the request in Euros."

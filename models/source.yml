@@ -1,0 +1,78 @@
+version: 2
+
+sources:
+  - name: public
+    tables:
+      - name: raw_data_credit_packages
+        columns:
+          - name: id_request
+            data_type: bigint
+          - name: created_date
+            data_type: text
+          - name: request_state
+            data_type: text
+          - name: price_eur
+            data_type: bigint
+          - name: signed_date
+            data_type: text
+          - name: id_audit
+            data_type: bigint
+          - name: audit_type
+            data_type: text
+          - name: audit_confirmation_date
+            data_type: text
+          - name: customer_name
+            data_type: text
+          - name: id_organization
+            data_type: bigint
+          - name: payment_term_days
+            data_type: bigint
+          - name: report_published_date
+            data_type: text
+          - name: audit_selected_date
+            data_type: text
+          - name: authorization_requested_date
+            data_type: text
+          - name: supplier_name
+            data_type: text
+          - name: supplier_country
+            data_type: text
+          - name: audited_product
+            data_type: text
+
+      - name: raw_data_requests
+        columns:
+          - name: id_request
+            data_type: bigint
+          - name: created_date
+            data_type: text
+          - name: request_state
+            data_type: text
+          - name: price_eur
+            data_type: bigint
+          - name: signed_date
+            data_type: text
+          - name: id_audit
+            data_type: bigint
+          - name: audit_type
+            data_type: text
+          - name: audit_confirmation_date
+            data_type: text
+          - name: customer_name
+            data_type: text
+          - name: id_organization
+            data_type: bigint
+          - name: payment_term_days
+            data_type: bigint
+          - name: report_published_date
+            data_type: text
+          - name: audit_selected_date
+            data_type: text
+          - name: authorization_requested_date
+            data_type: text
+          - name: supplier_name
+            data_type: text
+          - name: supplier_country
+            data_type: text
+          - name: audited_product
+            data_type: text
