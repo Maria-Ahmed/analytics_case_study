@@ -23,7 +23,6 @@ The project aims to answer the business questions based on *Customer Engagement 
 3. Run `generate_source`, passing in the arguments `schema_name` with a value of "public" and `generate_columns` set to true. It processes the schema, including its columns, in the `source.yml` file. Then from it, into the staging files eg: `stg_data_request` brings all the fields from `raw_layer` in the staging_layer.
 
 
-
 # Data Modeling 
 Used, Star schema has denormalized dimension tables. In this scenario I kept 2 fact tables, entertaining each of the business models for simplicity, and built upon their dimensions.
 
@@ -42,10 +41,22 @@ For dim_credit_packages, integrate credit package data with optional request dat
 
 For dim_date, I  generated a comprehensive date dimension table. Felt the need to format date attributes and extract various date components such as year, week, day, month, and day of the week. Then utilized a Macro for the same, which applies a custom function day_is_weekday to determine if the day is a weekday. Consequently at the end, generating a unique surrogate key for each date.
 
-Lastly, at the end, I retrieved comprehensive information about customers, their associated credit packages, and relevant numeric and date attributes, and then filtered the result to include only the first occurrence of each customer within their respective partitions
+Lastly, at the end, I retrieved comprehensive information about customers, their associated credit packages, and relevant numeric and date attributes, and then filtered the result to include only the first occurrence of each customer within their respective partitions.
 
+# Analytics 
+The business solutions using data have been curated here using Metabase. Each of the tabs within this dashboard reflects the trend, and issue to be analyzed as shown below.
+<img width="1494" alt="Screenshot 2024-02-26 at 11 13 27 PM" src="https://github.com/Maria-Ahmed/analytics_case_study/assets/38373765/844f0a0b-0a56-4d3d-ac2e-40a4b73841d1">
 
+In the image below, the trend tracks the utilization of credits against their start dates. 
+<img width="1460" alt="Screenshot 2024-02-26 at 11 14 57 PM" src="https://github.com/Maria-Ahmed/analytics_case_study/assets/38373765/99c31b7e-b0a2-4879-9861-b79b9b166a95"> 
 
-## Complete Documentation
+Below are the insights related to the companies who have switched models, and their average auditing price. 
+<img width="1493" alt="Screenshot 2024-02-26 at 11 20 40 PM" src="https://github.com/Maria-Ahmed/analytics_case_study/assets/38373765/72990a56-0636-403f-86bb-2d5e839ddfb4">
+
+# Complete Documentation
 For a detailed overview of the documentation, [click here](https://docs.google.com/document/d/1vupPREntZm1Orgefxd2ylUCLQsIVVLNfqe2uXVZYd4Y/edit).
+
+
+
+
 
